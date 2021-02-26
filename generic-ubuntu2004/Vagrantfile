@@ -12,6 +12,9 @@ Vagrant.configure("2") do |config|
     ubuntud.vm.provision "shell", path: "../scripts/apt/apt-mirror-updater.sh"
     ubuntud.vm.provision "shell", path: "../scripts/apt/dist-upgrade.sh"
     ubuntud.vm.provision "shell", path: "../scripts/apt/ubuntu-desktop.sh"
+    ubuntud.vm.provision "shell", inline: <<-SHELL
+      reboot
+    SHELL
   end
 
   config.vm.define "docker" do |docker|
