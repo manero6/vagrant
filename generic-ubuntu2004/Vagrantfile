@@ -23,8 +23,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "docker" do |docker|
     docker.vm.box = "generic/ubuntu2004"
     docker.vm.hostname = "docker"
-    docker.vm.provision "shell", path: "../scripts/apt/dist-upgrade.sh"
-    docker.vm.provision "shell", path: "../scripts/apt/docker.sh"
+    docker.vm.provision :docker
+    docker.vm.provision :docker_compose
   end
 
   # tuya-convert
