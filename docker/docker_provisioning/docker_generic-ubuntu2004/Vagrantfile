@@ -3,13 +3,26 @@ Vagrant.configure("2") do |config|
     config.vm.define "ubuntu" do |ubuntu|
       ubuntu.vm.box = "generic/ubuntu2004"
       ubuntu.vm.hostname = "ubuntu"
+      ubuntu.vm.network "private_network", ip: "192.168.121.20"
       ubuntu.vm.provision "docker" do |docker|
         docker.run "nginx",
           args: "-p 8001:80"
         docker.run "httpd",
           args: "-p 8002:80"
-        docker.run "node",
-          args: "-p 8003:80"
+        #docker.run "tomcat",
+        #  args: "-p 8003:8080"
+        docker.run "portainer/agent",
+          args: "-p 9001:9001 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes"
+      end
+    end
+
+    config.vm.define "portainer" do |portainer|
+      portainer.vm.box = "generic/ubuntu2004"
+      portainer.vm.hostname = "portainer"
+      portainer.vm.network "private_network", ip: "192.168.121.10"
+      portainer.vm.provision "docker" do |docker|
+        docker.run "portainer/portainer-ce",
+          args: "-p 8000:8000 -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data"
       end
     end
 
