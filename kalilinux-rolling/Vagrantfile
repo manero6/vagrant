@@ -10,8 +10,8 @@ Vagrant.configure("2") do |config|
     kaliL.vm.box = "kalilinux/rolling"
     kaliL.vm.hostname = "kali"
     kaliL.vm.synced_folder ".", "/vagrant", disabled: true
-    #kaliL.vm.provision "shell", path: "../scripts/apt/dist-upgrade.sh"
-    kaliL.vm.provision "shell", path: "../scripts/apt/kali-large.sh"
+    #kaliL.vm.provision "shell", path: "../provisioning/shell/apt/dist-upgrade.sh"
+    kaliL.vm.provision "shell", path: "../provisioning/shell/apt/kali-large.sh"
   end
 
 end
