@@ -8,10 +8,18 @@ Vagrant.configure("2") do |config|
   config.vm.define "docker" do |docker|
     docker.vm.box = "centos/7"
     docker.vm.hostname = "docker"
-    #docker.vm.provision "shell", path: "../scripts/yum/docker.sh"
-    #docker.vm.provision "shell", path: "../scripts/yum/docker-compose.sh"
+    #docker.vm.provision "shell", path: "../provisioning/shell/yum/docker.sh"
+    #docker.vm.provision "shell", path: "../provisioning/shell/yum/docker-compose.sh"
     docker.vm.provision :docker
     docker.vm.provision :docker_compose
+  end
+
+  config.vm.define "cfengine" do |cfe|
+    cfe.vm.box = "centos/7"
+    cfe.vm.hostname = "cfengine"
+    cfe.vm.provision "cfengine" do |cf|
+      cf.am_policy_hub = true
+    end
   end
 
 end
