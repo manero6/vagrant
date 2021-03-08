@@ -1,0 +1,16 @@
+Vagrant.configure("2") do |config|
+
+    config.vm.define "ubuntu" do |ubuntu|
+      ubuntu.vm.box = "generic/ubuntu2004"
+      ubuntu.vm.hostname = "ubuntu"
+      ubuntu.vm.provision "docker" do |docker|
+        docker.run "nginx",
+          args: "-p 8001:80"
+        #docker.run "apache",
+        #  args: "-p 8002:80"
+        docker.run "node",
+          args: "-p 8003:80"
+      end
+    end
+
+end
