@@ -10,7 +10,8 @@ Vagrant.configure("2") do |config|
   end
 
   # 20 alpine
-  (0..19).each do |i|
+  N = 19
+  (0..N).each do |i|
     config.vm.define "alpine-#{i}" do |alpine|
       alpine.vm.box = "generic/alpine313"
       alpine.vm.hostname = "alpine-#{i}"
