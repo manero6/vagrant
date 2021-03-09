@@ -1,0 +1,39 @@
+Vagrant.configure("2") do |config|
+
+  require '../VMs_loop.rb'
+  include VMs_loop
+
+  require '../Network_cards.rb'
+  include Network_cards
+
+  # Ubuntu VMs for INT_CARD
+  (1..N).each do |i|
+    config.vm.define "ubuntu-INT-#{i}" do |ubuntu|
+      ubuntu.vm.box = "generic/ubuntu2004"
+      ubuntu.vm.hostname = "ubuntu-INT-#{i}"
+      ubuntu.vm.network :public_network,
+        :dev => INT_CARD#,
+        #:mode => "bridge",
+        #:type => "bridge"
+      ubuntu.vm.provider :libvirt do |libvirt|
+        libvirt.memory = 384
+      end
+    end
+  end
+
+  # Ubuntu VMs for EXT_CARD_1
+  (1..N).each do |i|
+    config.vm.define "ubuntu-EXT-1-#{i}" do |ubuntu|
+      ubuntu.vm.box = "generic/ubuntu2004"
+      ubuntu.vm.hostname = "ubuntu-EXT-1-#{i}"
+      ubuntu.vm.network :public_network,
+        :dev => EXT_CARD_1#,
+        #:mode => "bridge",
+        #:type => "bridge"
+      ubuntu.vm.provider :libvirt do |libvirt|
+        libvirt.memory = 384
+      end
+    end
+  end
+
+end
