@@ -1,0 +1,47 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "fedora" do |fedora|
+    fedora.vm.box = "fedora/33-cloud-base"
+    fedora.vm.hostname = "fedora"
+    fedora.vm.provider "libvirt" do |lv|
+      lv.memory = 1024
+    end
+  end
+
+  config.vm.define "fedora-xfce" do |xfce|
+    xfce.vm.box = "fedora/33-cloud-base"
+    xfce.vm.hostname = "fedora-xfce"
+    xfce.vm.provider "libvirt" do |lv|
+      lv.memory = 1024
+    end
+    xfce.vm.provision "shell", path: "../provision/shell/dnf/xfce.sh"
+    xfce.vm.provision "shell", path: "../provision/shell/systemctl/set-graphical-target.sh"
+    xfce.vm.provision "shell", inline: "reboot"
+  end
+
+  config.vm.define "fedora-lxde" do |lxde|
+    lxde.vm.box = "fedora/33-cloud-base"
+    lxde.vm.hostname = "fedora-lxde"
+    lxde.vm.provider "libvirt" do |lv|
+      lv.memory = 1024
+    end
+    lxde.vm.provision "shell", path: "../provision/shell/dnf/lxde.sh"
+    lxde.vm.provision "shell", path: "../provision/shell/systemctl/set-graphical-target.sh"
+    lxde.vm.provision "shell", inline: "reboot"
+  end
+
+  config.vm.define "fedora-lxqt" do |lxqt|
+    lxqt.vm.box = "fedora/33-cloud-base"
+    lxqt.vm.hostname = "fedora-lxqt"
+    lxqt.vm.provider "libvirt" do |lv|
+      lv.memory = 1024
+    end
+    lxqt.vm.provision "shell", path: "../provision/shell/dnf/lxqt.sh"
+    lxqt.vm.provision "shell", path: "../provision/shell/systemctl/set-graphical-target.sh"
+    lxqt.vm.provision "shell", inline: "reboot"
+  end
+
+end
