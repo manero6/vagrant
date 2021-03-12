@@ -1,0 +1,11 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "windows10" do |win|
+    win.vm.box = "StefanScherer/Windows_10"
+    win.vm.hostname = "windows10"
+  end
+
+end
