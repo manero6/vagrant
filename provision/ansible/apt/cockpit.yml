@@ -1,0 +1,10 @@
+- hosts: all
+  tasks:
+
+  - name: Install Cockpit
+    apt:
+      name: cockpit
+      state: present
+
+  - name: Start service Cockpit
+    command: systemctl enable --now cockpit.socket
