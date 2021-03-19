@@ -10,8 +10,8 @@ Vagrant.configure("2") do |config|
       portainer.vm.box = "generic/ubuntu2004"
       portainer.vm.hostname = "portainer"
       portainer.vm.network "private_network", ip: "192.168.121.10"
-      portainer.vm.provision "docker" do |docker|
-        docker.run "portainer/portainer-ce",
+      portainer.vm.provision "docker" do |d|
+        d.run "portainer/portainer-ce",
           args: "-p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data"
       end
     end
@@ -20,8 +20,8 @@ Vagrant.configure("2") do |config|
       rancher.vm.box = "generic/ubuntu2004"
       rancher.vm.hostname = "rancher"
       rancher.vm.network "private_network", ip: "192.168.121.11"
-      rancher.vm.provision "docker" do |docker|
-        docker.run "rancher/rancher",
+      rancher.vm.provision "docker" do |d|
+        d.run "rancher/rancher",
           args: "-p 8000:80 -p 8443:443 --privileged"
       end
     end
@@ -30,14 +30,14 @@ Vagrant.configure("2") do |config|
       web.vm.box = "generic/ubuntu2004"
       web.vm.hostname = "web"
       web.vm.network "private_network", ip: "192.168.121.20"
-      web.vm.provision "docker" do |docker|
-        docker.run "nginx",
+      web.vm.provision "docker" do |d|
+        d.run "nginx",
           args: "-p 8001:80"
-        docker.run "httpd",
+        d.run "httpd",
           args: "-p 8002:80"
-        #docker.run "tomcat",
+        #d.run "tomcat",
         #  args: "-p 8003:8080"
-        docker.run "portainer/agent",
+        d.run "portainer/agent",
           args: "-p 9001:9001 -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes"
       end
     end
