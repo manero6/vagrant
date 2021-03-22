@@ -1,7 +1,8 @@
 Vagrant.configure("2") do |config|
 
+  config.vm.box = "Microsoft/EdgeOnWindows10"
+  
   config.vm.define "windows10" do |win|
-    win.vm.box = "Microsoft/EdgeOnWindows10"
     win.vm.hostname = "windows10"
   end
 

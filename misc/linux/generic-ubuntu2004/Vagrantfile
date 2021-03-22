@@ -1,15 +1,15 @@
 Vagrant.configure("2") do |config|
 
+  config.vm.box = "generic/ubuntu2004"
+
   # ubuntu
   config.vm.define "ubuntu" do |ubuntu|
-    ubuntu.vm.box = "generic/ubuntu2004"
     ubuntu.vm.hostname = "ubuntu"
     #ubuntu.vm.provision "shell", path: "../../../provision/shell/apt/dist-upgrade.sh"
   end
 
   # ubuntu-desktop
   config.vm.define "ubuntu-desktop" do |ubuntudesk|
-    ubuntudesk.vm.box = "generic/ubuntu2004"
     ubuntudesk.vm.hostname = "ubuntu-desktop"
     ubuntudesk.vm.provision "shell", path: "../../../provision/shell/apt/apt-mirror-updater.sh"
     ubuntudesk.vm.provision "shell", path: "../../../provision/shell/apt/dist-upgrade.sh"
@@ -19,21 +19,18 @@ Vagrant.configure("2") do |config|
 
   # docker
   config.vm.define "docker" do |docker|
-    docker.vm.box = "generic/ubuntu2004"
     docker.vm.hostname = "docker"
     docker.vm.provision :docker
     #docker.vm.provision :docker_compose
   end
 
   config.vm.define "microk8s" do |microk8s|
-    microk8s.vm.box = "generic/ubuntu2004"
     microk8s.vm.hostname = "microk8s"
     microk8s.vm.provision "shell", path: "../../../provision/shell/snap/microk8s.sh"
   end
 
   # tuya-convert
   config.vm.define "tuya-convert" do |tuya|
-    tuya.vm.box = "generic/ubuntu2004"
     tuya.vm.hostname = "tuya-convert"
     #tuya.vm.provider :libvirt do |libvirt|
     #  libvirt.redirdev :type => "spicevmc"
