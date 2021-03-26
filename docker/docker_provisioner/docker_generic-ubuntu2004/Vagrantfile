@@ -33,8 +33,8 @@ Vagrant.configure("2") do |config|
         args: "-p 8001:80"
       d.run "httpd",
         args: "-p 8002:80"
-      #d.run "tomcat",
-      #  args: "-p 8003:8080"
+      d.run "caddy",
+        args: "-p 8003:80"
       d.run "portainer/agent",
         args: "-p 9001:9001 -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes"
     end
