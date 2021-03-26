@@ -1,0 +1,77 @@
+---
+- hosts: all
+  vars_prompt:
+
+    - name: username
+      prompt: What username?
+      private: no
+
+    - name: hostname
+      prompt: What hostname?
+      private: no
+
+  tasks:
+
+  - name: Change Hostname
+    win_hostname:
+      name: "{{ lookup('env', 'HOSTNAME') }}"
+
+  - name: Create new Admin
+    win_user:
+      name: new_admin
+      password: password
+      state: present
+      groups:
+      - Users
+      - Administrators
+
+  - name: Create User
+    win_user:
+      name: "{{ lookup('env', 'USERNAME') }}"
+      state: present
+      groups:
+      - Users
+
+  - name: Create Additional User
+    win_user:
+      name: new_user
+      state: present
+      groups:
+      - Users
+
+  - name: Change Keyboard-Layout to "de-DE"
+    win_shell: Set-WinUserLanguageList -LanguageList de-DE -Force
+    #become_user: System
+
+  - name: Install Windows Updates and Reboot if needed
+    win_updates:
+      category_names:
+      reboot: yes
+
+  - name: Install Base Software
+    win_chocolatey:
+      name:
+      - firefox
+      - 7zip
+      - thunderbird
+      - nextcloud-client
+      state: present
+
+  - name: Install Additional Software
+    win_chocolatey:
+      name:
+      - office-tool
+      - chromium
+      - zoom
+      #- webex-meetings
+      state: present
+
+  - name: Office-2019 - Copy Standard Configuration XML
+    win_copy:
+      src: ./configuration_standard.xml
+      dest: 'C:\Users\vagrant\AppData\Local\office-tool\Office Tool\files\'
+
+#  - name: Office-2019 - Install Standard Version
+#    win_shell: .\setup.exe /configure .\configuration_standard.xml
+#    args:
+#      chdir: 'C:\Users\vagrant\AppData\Local\office-tool\Office Tool\files'

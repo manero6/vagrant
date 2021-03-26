@@ -1,0 +1,14 @@
+<Configuration>
+  <Add OfficeClientEdition="64" Channel="PerpetualVL2019" AllowCdnFallback="TRUE" ForceUpgrade="TRUE">
+    <Product ID="Standard2019Volume">
+      <Language ID="de-de" />
+      <Language ID="en-us" />
+      <ExcludeApp ID="Access" />
+      <ExcludeApp ID="Groove" />
+      <ExcludeApp ID="OneNote" />
+       <ExcludeApp ID="Lync" />
+      <ExcludeApp ID="OneDrive" />
+    </Product>
+  </Add>
+  <Updates Enabled="TRUE" />
+</Configuration>
