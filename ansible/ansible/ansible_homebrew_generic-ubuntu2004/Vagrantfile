@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION  = "2"
+
+VM_BOX = ENV["VM_BOX"] || "generic/ubuntu2004"
+VM_RAM = ENV["VM_RAM"] || "512"
+VM_CPU = ENV["VM_CPU"] || "1"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = VM_BOX
+
+  config.vm.provider "libvirt" do |lv|
+      lv.memory = VM_RAM
+      lv.cpus = VM_CPU
+  end
+  config.vm.provider "virtualbox" do |vb|
+      vb.memory = VM_RAM
+      vb.cpus = VM_CPU
+  end
+
+  config.vm.define "ubuntu" do |vm|
+    vm.vm.hostname = "ubuntu"
+    vm.vm.provision "brew", type: "shell", privileged: false, inline: %Q[/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"]
+    #vm.vm.provision "PATH", type: "shell", privileged: false, inline: %Q[grep linuxbrew /home/vagrant/.profile && exit || echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/vagrant/.profile && exit]
+    vm.vm.provision "ansible" do |a|
+      #a.become = true
+      #a.become_user = "vagrant"
+      a.playbook = "./playbook.yml"
+    end
+  end
+
+end

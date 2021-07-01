@@ -1,0 +1,20 @@
+---
+- name: Install Base Software
+  hosts: all
+
+  tasks:
+
+  - name: Install Base Software
+    homebrew:
+      name: "{{ item }}"
+      path: /home/linuxbrew/.linuxbrew/bin
+      state: present
+    loop:
+      - firefox
+      - thunderbird
+      - htop
+      - nextcloud
+      - openconnect
+      - openconnect-gui
+      - micorsoft-office
+      - p7zip
